@@ -25,23 +25,39 @@ void solve()
 {
     ll m,n;
     cin>>m>>n;
-    vector<vll> grid(m,vll(n));
-    vll a;
+    vector<vll> p(m,vll(n));
+    vll a(m);
     for (ll i = 0; i < m; i++) {
         for (ll j = 0; j < n; j++) {
-            ll x;
-            cin>>x;
-            grid[i][j]=x;
-            a.pb(x);
-        }
+            cin>>p[i][j];
+        } 
     }
-    if(n>m){
-        sort(all(a));
-        reverse(all(a));
-        while(a.size()!=n)a.ppb;
-        cout<<a.back()<<endl;
+    ll mi=INT64_MAX;
+    set<ll> s;
+    for(ll i=0;i<n;i++){
+        ll mx=0;
+        ll val=0;
+        for(ll j=0;j<m;j++){
+            if(p[j][i]>val){
+                val=p[j][i];
+                mx=j;
+            }
+        }
+        s.insert(mx);
+        mi=min(mi,val);
+    }
+    if(s.size()<=n-1){
+        cout<<mi<<endl;
         return;
     }
+    ll z=0;
+    for(ll i=0;i<m;i++){
+        sort(all(p[i]));
+        reverse(all(p[i]));
+        ll y=p[i][1];
+        z=max(z,y);
+    }
+    cout<<min(mi,z)<<endl;
 }
 int main() {
     ios_base::sync_with_stdio(0);
@@ -54,6 +70,7 @@ int main() {
     }
     return 0;
 }
+
 
 
 
